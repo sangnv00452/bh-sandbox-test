@@ -5,14 +5,15 @@
  * @example slugify('Hello, World!') === 'hello-world'
  */
 export function slugify(input: string): string {
-  return input
+  const words = input
     .normalize('NFKD')
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-');
+    .match(/[a-z0-9]+/g);
+  return words?.join('-') ?? '';
 }
 
 /** Joins path segments into a slug, keeping segment boundaries as hyphens. */
 export function slugifyPath(segments: string[]): string {
-  return segments.map(slugify).join('-');
+  return slugify(segments.join('-'));
 }
