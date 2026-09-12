@@ -9,10 +9,14 @@ export function slugify(input: string): string {
     .normalize('NFKD')
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-');
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
-/** Joins path segments into a slug, keeping segment boundaries as hyphens. */
+/** Joins path segments into a slug, keeping segment boundaries as single hyphens. */
 export function slugifyPath(segments: string[]): string {
-  return segments.map(slugify).join('-');
+  return segments
+    .map(slugify)
+    .filter((segment) => segment !== '')
+    .join('-');
 }
